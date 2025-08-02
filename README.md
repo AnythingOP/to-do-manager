@@ -72,4 +72,8 @@ Once the dependencies are installed and your API key is added, you can start the
 
 npm run dev
 
+<<<<<<< HEAD
 The application will now be running and accessible at **[http://localhost
+=======
+The application will now be running and accessible at **[http://localhost
+>>>>>>> b0b5bad30800e1ebfc08ce4b06fd6507963b720e
