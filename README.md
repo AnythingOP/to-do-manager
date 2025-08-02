@@ -1,4 +1,4 @@
-##TaskMaster AI: To-Do Manager with AI Assistant
+TaskMaster AI: To-Do Manager with AI Assistant
 TaskMaster AI is a simple yet powerful to-do list application built with a modern tech stack. It allows users to manage their daily tasks efficiently and includes an integrated AI assistant to help with questions and brainstorming.
 
 This project was built to demonstrate proficiency in frontend development, API integration, and modern web technologies.
