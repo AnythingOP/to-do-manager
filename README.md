@@ -53,7 +53,7 @@ Get your key: Visit Google AI Studio to get your free Gemini API key.
 
 Add the key to the code:
 
-Open the file located at pages/index.js (or pages/index.tsx).
+Open the file located at pages/index.tsx.
 
 Find the getAiResponse function.
 
