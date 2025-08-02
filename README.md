@@ -72,4 +72,4 @@ Once the dependencies are installed and your API key is added, you can start the
 
 npm run dev
 
-The application will now be running and accessible at **[http://localhost
+The application will now be running and accessible at http://localhost:3000.
