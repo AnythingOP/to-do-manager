@@ -1,49 +1,42 @@
 import React, { useState, useEffect } from 'react';
 
-// --- Helper Components ---
-
-// Icon for the app title
+// These are the SVG icons used in the app.
 const TitleIcon = () => (
   <svg className="w-8 h-8 mr-2 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
   </svg>
 );
 
-// Icon for the AI assistant
 const AiIcon = () => (
     <svg className="w-6 h-6 mr-2 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.373 3.373 0 0012 18.443V21M12 4.5A2.5 2.5 0 009.5 7a2.5 2.5 0 002.5 2.5A2.5 2.5 0 0014.5 7 2.5 2.5 0 0012 4.5z"></path>
     </svg>
 );
 
-// Icon for a completed task
 const CheckIcon = () => (
     <svg className="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
 );
 
-// Icon for an incomplete task
 const CircleIcon = () => (
     <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
 );
 
-// Icon for deleting a task
 const TrashIcon = () => (
     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
 );
 
-
-// --- Main App Component ---
-
 export default function Home() {
-    const [todos, setTodos] = useState([]);
-    const [newTodo, setNewTodo] = useState('');
-    const [filter, setFilter] = useState('all');
-    const [editingId, setEditingId] = useState(null);
-    const [editingText, setEditingText] = useState('');
-    const [aiQuestion, setAiQuestion] = useState('');
-    const [aiAnswer, setAiAnswer] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
+    // This section manages the "state" or memory of the application.
+    const [todos, setTodos] = useState([]); // Holds the list of all to-do items.
+    const [newTodo, setNewTodo] = useState(''); // Holds the text for the new to-do input field.
+    const [filter, setFilter] = useState('all'); // Keeps track of the current filter ('all', 'active', 'completed').
+    const [editingId, setEditingId] = useState(null); // Stores the ID of the task being edited.
+    const [editingText, setEditingText] = useState(''); // Stores the text of the task being edited.
+    const [aiQuestion, setAiQuestion] = useState(''); // Holds the text for the AI question input.
+    const [aiAnswer, setAiAnswer] = useState(''); // Holds the AI's answer.
+    const [isLoading, setIsLoading] = useState(false); // Tracks when the AI is thinking.
 
+    // This effect runs once when the app starts to load saved todos from the browser's memory.
     useEffect(() => {
         const savedTodos = localStorage.getItem('todos');
         if (savedTodos) {
@@ -51,10 +44,12 @@ export default function Home() {
         }
     }, []);
 
+    // This effect runs every time the `todos` list changes, saving it to the browser's memory.
     useEffect(() => {
         localStorage.setItem('todos', JSON.stringify(todos));
     }, [todos]);
 
+    // Adds a new to-do item to the list.
     const addTodo = (e) => {
         e.preventDefault();
         if (!newTodo.trim()) return;
@@ -62,19 +57,23 @@ export default function Home() {
         setNewTodo('');
     };
 
+    // Toggles the 'completed' status of a to-do item.
     const toggleTodo = (id) => {
         setTodos(todos.map(todo => todo.id === id ? { ...todo, completed: !todo.completed } : todo));
     };
 
+    // Deletes a to-do item from the list.
     const deleteTodo = (id) => {
         setTodos(todos.filter(todo => todo.id !== id));
     };
 
+    // Puts a to-do item into editing mode.
     const handleEdit = (todo) => {
         setEditingId(todo.id);
         setEditingText(todo.text);
     };
 
+    // Saves the updated text for a to-do item.
     const handleUpdate = (e, id) => {
         e.preventDefault();
         setTodos(todos.map(todo => todo.id === id ? { ...todo, text: editingText } : todo));
@@ -82,19 +81,22 @@ export default function Home() {
         setEditingText('');
     };
 
+    // Removes all completed to-do items from the list.
     const clearCompleted = () => {
         setTodos(todos.filter(todo => !todo.completed));
     };
 
+    // Creates a new list of todos based on the current filter setting.
     const filteredTodos = todos.filter(todo => {
         if (filter === 'active') return !todo.completed;
         if (filter === 'completed') return todo.completed;
         return true;
     });
 
-    // NEW: Calculate the number of completed todos
+    // Counts how many to-do items are marked as completed.
     const completedCount = todos.filter(todo => todo.completed).length;
 
+    // Handles the submission of a question to the AI.
     const handleAiSubmit = async (e) => {
         e.preventDefault();
         if (!aiQuestion.trim()) return;
@@ -111,8 +113,10 @@ export default function Home() {
         }
     };
     
+    // Sends the user's prompt to the Google Gemini API and returns the answer.
     const getAiResponse = async (prompt) => {
-        const apiKey = "Add your API Key"; // Remember to add your key
+        // Remember to add your key
+        const apiKey = "YOUR_API_KEY_HERE";
         const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
         const payload = { contents: [{ parts: [{ text: prompt }] }] };
         const response = await fetch(apiUrl, {
@@ -127,6 +131,7 @@ export default function Home() {
         return text;
     };
 
+    // This is the JSX that renders the HTML for the page.
     return (
         <div className="bg-slate-900 min-h-screen font-sans p-4 sm:p-6 lg:p-8">
             <div className="max-w-3xl mx-auto">
@@ -158,7 +163,6 @@ export default function Home() {
                                 <button onClick={() => setFilter('active')} className={`px-3 py-1 text-sm rounded-full ${filter === 'active' ? 'bg-sky-600 text-white' : 'bg-slate-700 text-gray-300'}`}>Active</button>
                                 <button onClick={() => setFilter('completed')} className={`px-3 py-1 text-sm rounded-full ${filter === 'completed' ? 'bg-sky-600 text-white' : 'bg-slate-700 text-gray-300'}`}>Completed</button>
                             </div>
-                            {/* UPDATED: Changed button shape and padding */}
                             {completedCount > 0 && (
                                 <button 
                                     onClick={clearCompleted} 
