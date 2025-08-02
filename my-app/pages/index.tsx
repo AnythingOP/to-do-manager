@@ -92,6 +92,9 @@ export default function Home() {
         return true;
     });
 
+    // NEW: Calculate the number of completed todos
+    const completedCount = todos.filter(todo => todo.completed).length;
+
     const handleAiSubmit = async (e) => {
         e.preventDefault();
         if (!aiQuestion.trim()) return;
@@ -109,7 +112,7 @@ export default function Home() {
     };
     
     const getAiResponse = async (prompt) => {
-        const apiKey = "YOUR_API_KEY_HERE"; // Remember to add your key
+        const apiKey = "AIzaSyDEBBIDHGvVa1p0TapfmHFC6EVxel1zwEM"; // Remember to add your key
         const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
         const payload = { contents: [{ parts: [{ text: prompt }] }] };
         const response = await fetch(apiUrl, {
@@ -155,7 +158,15 @@ export default function Home() {
                                 <button onClick={() => setFilter('active')} className={`px-3 py-1 text-sm rounded-full ${filter === 'active' ? 'bg-sky-600 text-white' : 'bg-slate-700 text-gray-300'}`}>Active</button>
                                 <button onClick={() => setFilter('completed')} className={`px-3 py-1 text-sm rounded-full ${filter === 'completed' ? 'bg-sky-600 text-white' : 'bg-slate-700 text-gray-300'}`}>Completed</button>
                             </div>
-                            <button onClick={clearCompleted} className="text-sm text-red-500 hover:text-red-400">Clear Completed</button>
+                            {/* UPDATED: Changed button shape and padding */}
+                            {completedCount > 0 && (
+                                <button 
+                                    onClick={clearCompleted} 
+                                    className="text-sm text-red-400 border border-red-400/50 rounded-md px-2 py-1 hover:bg-red-400/20 hover:text-red-300 transition-colors"
+                                >
+                                    Clear ({completedCount})
+                                </button>
+                            )}
                         </div>
 
                         <ul className="space-y-3">
