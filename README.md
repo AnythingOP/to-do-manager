@@ -3,8 +3,6 @@ TaskMaster AI is a simple yet powerful to-do list application built with a moder
 
 This project was built to demonstrate proficiency in frontend development, API integration, and modern web technologies.
 
-(Optional: You can take a screenshot of your finished app, upload it to a site like Imgur, and paste the link here.)
-
 Features
 Create, Edit, & Delete Tasks: Full CRUD functionality for managing your to-do list.
 
