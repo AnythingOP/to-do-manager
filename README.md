@@ -65,11 +65,4 @@ const apiKey = "YOUR_API_KEY_HERE";
 
 Replace "YOUR_API_KEY_HERE" with the actual API key you copied from Google AI Studio.
 
-Warning: Do not commit your API key directly to a public GitHub repository. For a real-world project, you would use environment variables to keep it secure.
-
-4. Run the Development Server
-Once the dependencies are installed and your API key is added, you can start the application.
-
-npm run dev
-
-The application will now be running and accessible at http://localhost:3000.
+**Warning
