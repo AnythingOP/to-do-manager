@@ -112,7 +112,7 @@ export default function Home() {
     };
     
     const getAiResponse = async (prompt) => {
-        const apiKey = "AIzaSyDEBBIDHGvVa1p0TapfmHFC6EVxel1zwEM"; // Remember to add your key
+        const apiKey = "Add your API Key"; // Remember to add your key
         const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
         const payload = { contents: [{ parts: [{ text: prompt }] }] };
         const response = await fetch(apiUrl, {
